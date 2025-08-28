@@ -1,0 +1,8 @@
+span {
+    text-align: center;
+}
+
+span.terms-and-conditions, span.terms-and-conditions * {
+    font-size: 20px;
+    line-height: 25px;
+}

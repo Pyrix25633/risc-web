@@ -1,0 +1,142 @@
+:root {
+    --sidebars-height: calc(100dvh - 10px);
+    --topbar-width: calc(100vw - 277px*2 - 10px);
+    --marquee-big-width: calc(var(--topbar-width) - 70px - 5px);
+    --messages-width: calc(100% - 20px);
+    --message-max-width: calc(var(--topbar-width) - 100px);
+    --textarea-width: calc(var(--topbar-width) - 70px);
+    --topbar-mobile-width: calc(100vw - 10px);
+    --marquee-big-mobile-width: calc(var(--topbar-mobile-width) - 70px - 15px - 25px*2);
+    --message-mobile-max-width: calc(var(--topbar-mobile-width) - 100px);
+    --textarea-mobile-width: calc(var(--topbar-mobile-width) - 70px);
+    --marquee-big-mobile-small-width: calc(var(--topbar-mobile-width) - 50px - 15px - 25px*2);
+}
+
+nav#navbar {
+    padding: 20px 0;
+    width: 100vw;
+}
+div.navbar {
+    padding: 10px;
+}
+
+div.bottom-margin {
+    margin-bottom: 90px;
+}
+
+div#footer {
+    padding-bottom: 20px;
+    margin-top: 20px;
+    gap: 50px;
+}
+
+div.panel {
+    padding: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+div.box {
+    gap: 15px;
+}
+div.container {
+    gap: 10px;
+}
+div.input-feedback {
+    gap: 3px;
+}
+div.small-gap {
+    gap: 5px;
+}
+
+div.topbar, div.sidebar {
+    gap: 5px !important;
+}
+div.chat, div.user, div.sidebar, div.topbar, div.default-permission-level {
+    padding: 5px;
+}
+div.chat, div.user, div.info {
+    gap: 3px;
+}
+div.info {
+    gap: 5px;
+}
+
+div.logo-marquee, div.pfp-marquee {
+    gap: 5px;
+}
+
+div.actions {
+    gap: 5px;
+}
+
+button {
+    padding: 5px 10px 5px 10px;
+    gap: 5px;
+}
+
+div.messages {
+    padding: 10px;
+    gap: 10px;
+}
+div.message {
+    gap: 5px;
+}
+span.message-text {
+    padding: 5px;
+}
+div.message-actions {
+    gap: 5px;
+}
+
+div.unread-messages {
+    height: 20px;
+    margin-bottom: 20px;
+}
+div.unread-messages span {
+    line-height: 40px;
+    padding: 0 10px;
+}
+
+div.textarea {
+    padding: 5px;
+    gap: 5px;
+}
+textarea {
+    padding: 5px;
+}
+div.actions-counter {
+    gap: 5px;
+}
+div.emoji-selector {
+    gap: 5px;
+    padding: 5px;
+}
+
+div.status {
+    gap: 20px;
+}
+
+canvas {
+    padding: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+    div.message-data {
+        gap: 5px;
+    }
+    @media screen and (max-width: 850px) {
+        div.panel {
+            padding: 25px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        div.label-input {
+            gap: 2px;
+        }
+        @media screen and (max-width: 800px) {
+            div.message-meta {
+                gap: 2px;
+            }
+        }
+    }
+}

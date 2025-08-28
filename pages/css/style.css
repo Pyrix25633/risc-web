@@ -1,0 +1,186 @@
+:root {
+    --color-background: #222222;
+    --color-lighter: #333333;
+    --color-foreground: #DDDDDD;
+    --color-error: #F54F47;
+    --color-warning: #F3E63D;
+    --color-success: #71E0AE;
+    --color-risc: #f1f86e;
+    --color-risc-transparent: #f1f86e70;
+    --color-risc-dark: #f8ba6e;
+}
+
+* {
+    color: var(--color-foreground);
+    font-size: 20px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-background);
+    min-height: 100dvh;
+    margin: 0;
+}
+body::-webkit-scrollbar-track, body::-webkit-scrollbar, body::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+h3 {
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+ol {
+    margin: 0;
+}
+
+label {
+    line-height: 26px;
+    text-align: center;
+}
+input {
+    height: 26px;
+    border: 1px solid var(--color-foreground);
+    padding: 1px 1px 2px 5px;
+    background-color: var(--color-background);
+}
+button {
+    display: flex;
+    border: 0;
+    background-color: var(--color-risc);
+    color: var(--color-background);
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+}
+img.button {
+    height: 25px;
+    cursor: pointer;
+}
+input:focus {
+    border-color: var(--color-risc);
+    outline: none;
+}
+input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-text-fill-color: var(--color-foreground);
+    -webkit-box-shadow: 0 0 0 50px var(--color-background) inset;
+}
+input.medium {
+    width: 90px;
+}
+input.small {
+    width: 40px;
+}
+input[type=number] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+button:active {
+    background-color: var(--color-foreground);
+}
+button:disabled {
+    filter: brightness(70%);
+    cursor: not-allowed;
+}
+
+span.text, span.text * {
+    font-size: 16px;
+    text-align: center;
+}
+span.title {
+    font-size: 25px;
+    line-height: 30px;
+    letter-spacing: -1px;
+}
+span.risc-color {
+    color: var(--color-risc);
+}
+
+a {
+    color: var(--color-risc);
+}
+
+.error {
+    color: var(--color-error) !important;
+}
+img.error {
+    width: 50px;
+}
+.warning, .warning * {
+    color: var(--color-warning);
+    border-color: var(--color-warning);
+}
+div.warning button {
+    background-color: var(--color-warning);
+    color: var(--color-background);
+}
+div.warning button:active {
+    background-color: var(--color-foreground);
+    color: var(--color-warning);
+}
+.success {
+    color: var(--color-success) !important;
+}
+
+nav#navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+div.navbar {
+    background-color: var(--color-risc-dark);
+}
+
+div#footer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+}
+
+img#icon {
+    width: 30px;
+}
+
+div.box {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+}
+div.box.main {
+    width: 100%;
+}
+
+div.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+div.panel {
+    background-color: var(--color-lighter);
+}
+
+@media screen and (max-width: 600px) {
+    div.label-input {
+        flex-direction: column;
+    }
+}

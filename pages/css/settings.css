@@ -1,0 +1,56 @@
+img#pfp {
+    height: 100px;
+    background-color: var(--color-lighter);
+}
+
+img#change-pfp {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    height: 30px;
+    background-color: var(--color-simplychat);
+    cursor: pointer;
+}
+
+img#tfaQr {
+    width: auto;
+}
+
+div.relative {
+    position: relative;
+}
+
+div.slider {
+    display: flex;
+    border: 2px solid var(--color-foreground);
+    height: min-content;
+    padding: 3px;
+    cursor: pointer;
+}
+div.slider.off {
+    padding-right: 15px;
+    background-color: var(--color-background);
+}
+div.warning div.slider.off {
+    background-color: var(--color-background);
+    border-color: var(--color-error);
+}
+div.slider.on {
+    padding-left: 15px;
+    background-color: var(--color-simplychat);
+}
+div.warning div.slider.on {
+    background-color: var(--color-background);
+    border-color: var(--color-success);
+}
+div.slider div.slider-circle {
+    background-color: var(--color-foreground);
+    height: 15px;
+    width: 15px;
+}
+div.warning div.slider.off div.slider-circle {
+    background-color: var(--color-error);
+}
+div.warning div.slider.on div.slider-circle {
+    background-color: var(--color-success);
+}
