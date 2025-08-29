@@ -1,17 +1,17 @@
 export const settings = {
     https: {
-        cert: "certs/cert.pem",
-        key: "certs/key.pem",
-        passphrase: "",
+        cert: 'certs/cert.pem',
+        key: 'certs/key.pem',
+        passphrase: '',
         suppressRejectUnauthorized: true,
-        hostname: "risc-web.my.to",
+        hostname: 'risc-web.my.to',
         port: 4443,
         upgradePort: 8080
     },
     jwt: {
-        cookieName: "risc-web-auth",
-        password: "jfv5a85?-54sguw17njbgv37_bvo",
-        algorithm: "HS512"
+        cookieName: 'risc-web-auth',
+        password: '',
+        algorithm: 'HS512'
     },
     bcrypt: {
         rounds: 12
@@ -21,12 +21,12 @@ export const settings = {
         window: 2
     },
     nodemailerTransport: {
-        host: "smtp.zoho.eu",
+        host: 'smtp.zoho.eu',
         port: 465,
         secure: true,
         auth: {
-            user: "simplychat@zohomail.eu",
-            pass: "CT-2722@25633"
+            user: 'simplychat@zohomail.eu',
+            pass: ''
         }
     },
     production: false
