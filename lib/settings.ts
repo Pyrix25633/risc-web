@@ -28,5 +28,6 @@ export const settings = {
             user: 'simplychat@zohomail.eu',
             pass: ''
         }
-    }
+    },
+    production: false
 };

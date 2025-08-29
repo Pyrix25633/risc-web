@@ -1,4 +1,4 @@
-# SIMPLY CHAT
+# RISC Web
 
 ReducedIstructionSetComputer assembly web compiler and interpreter
 Web version of [risc-sim](https://github.com/Pyrix25633/risc-sim)
