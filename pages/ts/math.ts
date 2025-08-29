@@ -1,23 +1,38 @@
 type Bits = 8 | 16 | 32;
 
-class Int {
-    private readonly signed: boolean;
-    private n: number;
-    private readonly mask: number;
-    private readonly flag: number;
+class IntProperties {
+    public readonly mask: number;
+    public readonly flag: number;
+    public readonly signed: boolean;
 
-    constructor(bits: Bits, signed: boolean, n: number | Int | undefined = undefined) {
-        this.signed = signed;
-        this.n = 0;
+    constructor(bits: Bits, signed: boolean) {
         this.mask = 2**bits - 1;
         this.flag = 2**(bits - 1);
+        this.signed = signed;
+    }
+}
+
+const int8Properties = new IntProperties(8, true);
+const uint8Properties = new IntProperties(8, false);
+const int16Properties = new IntProperties(16, true);
+const uint16Properties = new IntProperties(16, false);
+const int32Properties = new IntProperties(32, true);
+const uint32Properties = new IntProperties(32, false);
+
+abstract class Int {
+    private readonly properties: IntProperties;
+    private n: number;
+
+    constructor(properties: IntProperties, n: number | Int | undefined = undefined) {
+        this.properties = properties;
+        this.n = 0;
         if(n != undefined) this.set(n);
     }
 
     public set(n: number | Int): void {
         if(n instanceof Int) n = n.get();
-        this.n = n & this.mask;
-        if(this.signed && this.neg()) this.n = -(this.n ^ (this.mask - 1));
+        this.n = n & this.properties.mask;
+        if(this.properties.signed && this.neg()) this.n = -(this.n ^ (this.properties.mask - 1));
     }
 
     public get(): number {
@@ -35,7 +50,7 @@ class Int {
     }
 
     public neg(): boolean {
-        return (this.n & this.flag) == this.flag;
+        return (this.n & this.properties.flag) == this.properties.flag;
     }
 
     public gt(n: number | Int): boolean {
@@ -49,11 +64,11 @@ class Int {
     }
 
     public not(): number {
-        return ~this.n & this.mask;
+        return ~this.n & this.properties.mask;
     }
 
     public twos(): number {
-        return (~this.n + 1) & this.mask;
+        return (~this.n + 1) & this.properties.mask;
     }
 
     public and(n: number | Int): number {
@@ -71,47 +86,47 @@ class Int {
         return this.n ^ n;
     }
 
-    public lShift(): number {
-        return (this.n << 1) & this.mask;
+    public lShift(n: number = 1): number {
+        return this.n << n;
     }
 
-    public rShift(): number {
-        return this.n >> 1;
+    public rShift(n: number = 1): number {
+        return this.n >> n;
     }
 }
 
 export class Int8 extends Int {
     constructor(n: number | Int | undefined = undefined) {
-        super(8, true, n)
+        super(int8Properties, n)
     }
 }
 
 export class Uint8 extends Int {
     constructor(n: number | Int | undefined = undefined) {
-        super(8, false, n)
+        super(uint8Properties, n)
     }
 }
 
 export class Int16 extends Int {
     constructor(n: number | Int | undefined = undefined) {
-        super(16, true, n)
+        super(int16Properties, n)
     }
 }
 
 export class Uint16 extends Int {
     constructor(n: number | Int | undefined = undefined) {
-        super(16, false, n)
+        super(uint16Properties, n)
     }
 }
 
 export class Int32 extends Int {
     constructor(n: number | Int | undefined = undefined) {
-        super(32, true, n)
+        super(int32Properties, n)
     }
 }
 
 export class Uint32 extends Int {
     constructor(n: number | Int | undefined = undefined) {
-        super(32, false, n)
+        super(uint32Properties, n)
     }
 }

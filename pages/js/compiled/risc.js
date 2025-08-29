@@ -1,4 +1,4 @@
-import { Int16, Int32, Uint16, Uint32 } from './math.js';
+import { Int16, Int32, Uint16, Uint32, Uint8 } from './math.js';
 class StatusRegister {
     constructor() {
         this.zero = false;
@@ -26,12 +26,14 @@ class ControlUnit {
 class ArithmeticLogicUnit {
     constructor(statusRegister) {
         this.registers = [];
-        this.reset();
+        for (let i = 0; i < 0x10; i++) {
+            this.registers.push(new Uint16());
+        }
         this.statusRegister = statusRegister;
     }
     reset() {
-        for (let i = 0; i < 0x10; i++) {
-            this.registers.push(new Uint16());
+        for (const register of this.registers) {
+            register.set(0x0000);
         }
     }
     updateZeroAndNegative(r) {
@@ -128,9 +130,58 @@ class CentralProcessingUnit {
     constructor() {
         this.controlUnit = new ControlUnit();
         this.arithmeticLogicUnit = new ArithmeticLogicUnit(this.controlUnit.statusRegister);
+        this.systemBus = new SystemBus();
+        this.centralMemory = new CentralMemory(this.systemBus);
     }
     reset() {
         //TODO
         this.controlUnit.statusRegister.reset();
+    }
+}
+class CentralMemory {
+    constructor(systemBus) {
+        this.cells = [];
+        for (let i = 0; i <= 0xFFFF; i++) {
+            this.cells.push(new Uint8());
+        }
+        this.systemBus = systemBus;
+    }
+    reset() {
+        for (const cell of this.cells) {
+            cell.set(0);
+        }
+    }
+    operate() {
+        if (!this.systemBus.control.memory)
+            return;
+        const address = this.systemBus.address.get();
+        if (this.systemBus.control.read) {
+            if (this.systemBus.control.word)
+                this.systemBus.data.set(this.cells[address].add(this.cells[address + 1].lShift(8)));
+            else
+                this.systemBus.data.set(this.cells[address]);
+        }
+        else {
+            if (this.systemBus.control.word) {
+                this.cells[address].set(this.systemBus.data);
+                this.cells[address + 1].set(this.systemBus.data.rShift(8));
+            }
+            else
+                this.cells[address].set(this.systemBus.data);
+        }
+    }
+}
+class ControlBus {
+    constructor(read = true, memory = true, word = true) {
+        this.read = read;
+        this.memory = memory;
+        this.word = word;
+    }
+}
+class SystemBus {
+    constructor() {
+        this.address = new Uint16();
+        this.data = new Uint16();
+        this.control = new ControlBus();
     }
 }

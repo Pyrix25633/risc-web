@@ -1,4 +1,4 @@
-import { Int16, Int32, Uint16, Uint32 } from './math.js';
+import { Int16, Int32, Uint16, Uint32, Uint8 } from './math.js';
 
 interface Appendable {
     appendTo(node: HTMLElement): void;
@@ -49,13 +49,15 @@ class ArithmeticLogicUnit {
 
     constructor(statusRegister: StatusRegister) {
         this.registers = [];
-        this.reset();
+        for(let i = 0; i < 0x10; i++) {
+            this.registers.push(new Uint16());
+        }
         this.statusRegister = statusRegister;
     }
 
     public reset(): void {
-        for(let i = 0; i < 0x10; i++) {
-            this.registers.push(new Uint16());
+        for(const register of this.registers) {
+            register.set(0x0000);
         }
     }
 
@@ -151,16 +153,82 @@ class ArithmeticLogicUnit {
 }
 
 class CentralProcessingUnit {
-    public controlUnit: ControlUnit;
-    public arithmeticLogicUnit: ArithmeticLogicUnit;
+    public readonly controlUnit: ControlUnit;
+    public readonly arithmeticLogicUnit: ArithmeticLogicUnit;
+    public readonly centralMemory: CentralMemory;
+    public readonly systemBus: SystemBus;
 
     constructor() {
         this.controlUnit = new ControlUnit();
         this.arithmeticLogicUnit = new ArithmeticLogicUnit(this.controlUnit.statusRegister);
+        this.systemBus = new SystemBus();
+        this.centralMemory = new CentralMemory(this.systemBus);
     }
 
     public reset(): void {
         //TODO
         this.controlUnit.statusRegister.reset();
+    }
+}
+
+class CentralMemory {
+    private readonly cells: Uint8[];
+    private readonly systemBus: SystemBus;
+
+    constructor(systemBus: SystemBus) {
+        this.cells = [];
+        for(let i = 0; i <= 0xFFFF; i++) {
+            this.cells.push(new Uint8());
+        }
+        this.systemBus = systemBus;
+    }
+
+    public reset(): void {
+        for(const cell of this.cells) {
+            cell.set(0);
+        }
+    }
+
+    public operate(): void {
+        if(!this.systemBus.control.memory) return;
+        const address = this.systemBus.address.get();
+        if(this.systemBus.control.read) {
+            if(this.systemBus.control.word)
+                this.systemBus.data.set(this.cells[address].add(this.cells[address + 1].lShift(8)));
+            else
+                this.systemBus.data.set(this.cells[address]);
+        }
+        else {
+            if(this.systemBus.control.word) {
+                this.cells[address].set(this.systemBus.data);
+                this.cells[address + 1].set(this.systemBus.data.rShift(8));
+            }
+            else
+                this.cells[address].set(this.systemBus.data);
+        }
+    }
+}
+
+class ControlBus {
+    public readonly read: boolean;
+    public readonly memory: boolean;
+    public readonly word: boolean;
+
+    constructor(read: boolean = true, memory: boolean = true, word: boolean = true) {
+        this.read = read;
+        this.memory = memory;
+        this.word = word;
+    }
+}
+
+class SystemBus {
+    public address: Uint16;
+    public data: Uint16;
+    public control: ControlBus;
+
+    constructor() {
+        this.address = new Uint16();
+        this.data = new Uint16();
+        this.control = new ControlBus();
     }
 }
