@@ -1,0 +1,12 @@
+#simplychat
+lib/settings.ts
+certs/
+
+#node
+node_modules/
+
+#bash
+*.sh
+
+#env
+.env
